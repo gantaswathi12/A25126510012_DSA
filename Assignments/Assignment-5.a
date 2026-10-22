@@ -1,0 +1,53 @@
+/*A network of n locations is represented as a graph. Write a C program that accepts the graph  using an Adjacency Matrix, accepts a starting vertex, performs a graph traversal, displays the visit  order, and ensures that a vertex is not processed repeatedly. Test it with connected and partially  connected graphs*/
+
+#include <stdio.h>
+#define MAX 20
+int graph[MAX][MAX];
+int visited[MAX];
+int queue[MAX];
+int n;
+int front = 0, rear = -1;
+void BFS(int start)
+{
+    int i, v;
+    visited[start] = 1;
+    queue[++rear] = start;
+    printf("BFS Traversal: ");
+    while (front <= rear)
+    {
+     v = queue[front++];
+     printf("%d ", v);
+        for (i = 0; i < n; i++)
+        {
+            if (graph[v][i] == 1 && visited[i] == 0)
+            {
+                visited[i] = 1;
+                queue[++rear] = i;
+            }
+        }
+    }
+}
+int main()
+{
+    int i, j, start;
+    printf("Enter number of vertices: ");
+    scanf("%d", &n);
+    printf("Enter adjacency matrix:\n");
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+    printf("Enter starting vertex: ");
+    scanf("%d", &start);
+    for (i = 0; i < n; i++)
+    {
+        visited[i] = 0;
+    }
+
+    BFS(start);
+
+    return 0;
+}
